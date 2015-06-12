@@ -1,0 +1,1 @@
+<div id="simplecrm-panel-home-div"></div>

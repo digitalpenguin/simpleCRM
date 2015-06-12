@@ -1,0 +1,21 @@
+<?php
+$_lang['simplecrm.contact'] = 'Contact';
+$_lang['simplecrm.contacts'] = 'Contacts';
+$_lang['simplecrm.desc'] = 'Manage your contacts here.';
+$_lang['simplecrm.description'] = 'Description';
+$_lang['simplecrm.contact_err_ae'] = 'A contact with that name already exists.';
+$_lang['simplecrm.contact_err_nf'] = 'Contact not found.';
+$_lang['simplecrm.contact_err_ns'] = 'Contact not specified.';
+$_lang['simplecrm.contact_err_ns_name'] = 'Please specify a name for the contact.';
+$_lang['simplecrm.contact_err_remove'] = 'An error occurred while trying to remove the contact.';
+$_lang['simplecrm.contact_err_save'] = 'An error occurred while trying to save the doodle.';
+$_lang['simplecrm.contact_create'] = 'Create New Contact';
+$_lang['simplecrm.contact_remove'] = 'Remove Contact';
+$_lang['simplecrm.contact_remove_confirm'] = 'Are you sure you want to remove this contact?';
+$_lang['simplecrm.contact_update'] = 'Update Contact';
+$_lang['simplecrm.downloads'] = 'Downloads';
+$_lang['simplecrm.location'] = 'Location';
+$_lang['simplecrm.management'] = 'Contact Management';
+$_lang['simplecrm.management_desc'] = 'Manage your contacts here. You can edit them by either double-clicking on the grid or right-clicking on the respective row.';
+$_lang['simplecrm.name'] = 'Name';
+$_lang['simplecrm.search...'] = 'Search...';

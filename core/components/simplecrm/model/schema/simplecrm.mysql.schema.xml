@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="simplecrm" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" version="1.0">
+    <object class="Contact" table="contacts" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+        <field key="description" dbtype="text" phptype="string" null="false" default=""/>
+        <field key="address_1" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+        <field key="address_2" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+        <field key="address_3" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+        <field key="website" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+        <field key="phone_1" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+        <field key="phone_2" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+        <field key="year_established" dbtype="int" precision="4" attributes="unsigned" phptype="integer" null="false"/>
+        <field key="product_offering" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+        <field key="school_type" dbtype="int" precision="4" attributes="unsigned" phptype="integer" null="false"/>
+        <field key="contacted" dbtype="tinyint" precision="1" phptype="boolean" attributes="unsigned" null="false" default="0" />
+        <field key="extra_info" dbtype="text" phptype="string" null="false" default=""/>
+
+
+        <field key="createdon" dbtype="datetime" phptype="datetime" null="true"/>
+        <field key="createdby" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0"/>
+        <field key="editedon" dbtype="datetime" phptype="datetime" null="true"/>
+        <field key="editedby" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0"/>
+
+        <aggregate alias="CreatedBy" class="modUser" local="createdby" foreign="id" cardinality="one" owner="foreign"/>
+        <aggregate alias="EditedBy" class="modUser" local="editedby" foreign="id" cardinality="one" owner="foreign"/>
+    </object>
+</model>
