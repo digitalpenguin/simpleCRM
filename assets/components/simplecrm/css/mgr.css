@@ -2,6 +2,8 @@
     overflow:hidden;
 }
 
-#back-to-grid-button {
+#simplecrm-panel-contact .x-toolbar {
+    background-color:transparent;
+    border-color:transparent;
     margin-bottom:20px;
 }

@@ -96,8 +96,9 @@ Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
                 easing: 'easeIn',
                 duration:.3,
                 scope: this
-            }).refresh();
+            });
             contactPanel.destroy();
+            contactGrid.refresh();
         });
         slideContactPanelOut.delay(350); // keep delay slightly longer than effect
     }

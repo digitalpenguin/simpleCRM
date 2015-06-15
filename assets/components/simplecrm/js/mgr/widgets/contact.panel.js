@@ -4,16 +4,76 @@ SimpleCRM.panel.Contact = function(config) {
         border: false
         ,id: 'simplecrm-panel-contact'
         ,baseCls: 'modx-formpanel'
-        ,cls: 'container form-with-labels'
+        ,cls: 'container'
         ,layout: 'form'
         ,anchor: '90%'
         ,url: SimpleCRM.config.connectorUrl
+        ,baseParams: {
+            action: 'mgr/contact/update'
+        }
         ,listeners: {
             'render': {fn:function(){
                 this.setup();
             },scope:this}
         }
         ,items: [{
+            xtype: 'hidden'
+            ,name: 'id'
+        },{
+            xtype: 'container'
+            ,layout:'column'
+            ,items:[{
+                xtype:'container'
+                ,layout:'form'
+                ,items:[{
+                    xtype: 'textfield'
+                    ,fieldLabel: 'Name'
+                    ,name: 'name'
+                    ,anchor: '100%'
+                },{
+                    xtype: 'textarea'
+                    ,fieldLabel: 'Description'
+                    ,name: 'description'
+                    ,anchor: '100%'
+                },{
+                    xtype: 'textfield'
+                    ,fieldLabel: 'Street Address'
+                    ,name: 'address_1'
+                    ,anchor: '100%'
+                },{
+                    xtype: 'textfield'
+                    ,fieldLabel: 'Suburb'
+                    ,name: 'address_2'
+                    ,anchor: '100%'
+                },{
+                    xtype: 'textfield'
+                    ,fieldLabel: 'Region'
+                    ,name: 'address_3'
+                    ,anchor: '100%'
+                },{
+                    xtype: 'simplecrm-combo-schooltype'
+                    ,fieldLabel: 'School Type'
+                    ,name: 'school_type'
+                    ,hiddenName: 'school_type'
+                    ,anchor: '100%'
+                }]
+            },{
+                xtype:'container'
+                ,layout:'form'
+                ,items:[{
+                    xtype:'textfield'
+                    ,fieldLabel:'Website'
+                    ,name:'website'
+                    ,anchor:'100%'
+                },{
+                    xtype:'textfield'
+                    ,fieldLabel:'Phone Number'
+                    ,name:'phone_1'
+                    ,anchor:'100%'
+                }]
+            }]
+        }]
+        ,tbar:[{
             text: 'Back to Contact List'
             ,xtype: 'button'
             ,id: 'back-to-grid-button'
@@ -21,20 +81,26 @@ SimpleCRM.panel.Contact = function(config) {
                 'click': {fn: this.backToContactGrid, scope:this}
             }
         },{
-            xtype: 'hidden'
-            ,name: 'id'
-        },{
-            xtype: 'textfield'
-            ,fieldLabel: 'Name'
-            ,name: 'name'
-            ,anchor: '100%'
-        },{
-            xtype: 'textarea'
-            ,fieldLabel: 'Description'
-            ,name: 'description'
-            ,anchor: '100%'
-        },{
             xtype: 'modx-actionbuttons'
+            ,items:[{
+                xtype:'button'
+                ,text: 'Save'
+                ,listeners: {
+                    'click': {fn: this.saveContact, scope:this}
+                }
+            }, {
+                xtype:'button'
+                ,text:'Apply Changes'
+                ,listeners: {
+                    'click': {fn:this.applyChanges, scope:this}
+                }
+            },{
+                xtype:'button'
+                ,text: 'Close'
+                ,listeners: {
+                    'click': {fn: this.backToContactGrid, scope:this}
+                }
+            }]
         }]
     });
     SimpleCRM.panel.Contact.superclass.constructor.call(this,config);
@@ -62,15 +128,11 @@ Ext.extend(SimpleCRM.panel.Contact,MODx.FormPanel,{
         });
     },backToContactGrid: function() {
         Ext.getCmp('simplecrm-panel-home').backToContactGrid();
+    },saveContact: function() {
+        this.submit();
+        this.backToContactGrid();
+    },applyChanges: function() {
+        this.submit();
     }
 });
 Ext.reg('simplecrm-panel-contact',SimpleCRM.panel.Contact);
-
-/*SimpleCRM.toolbar.Contact = function(config) {
-    config = config || {};
-    Ext.apply(config,{
-
-    });
-};
-Ext.extend(SimpleCRM.toolbar.Contact,MODx.toolbar);
-Ext.reg('simplecrm-toolbar-contact',SimpleCRM.toolbar.Contact);*/

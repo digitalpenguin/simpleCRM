@@ -10,8 +10,6 @@ SimpleCRM.grid.Contacts = function(config) {
         ,remoteSort: true
         ,anchor: '97%'
         ,autoExpandColumn: 'name'
-        ,save_action: 'mgr/contact/updateFromGrid'
-        ,autosave: true
         ,listeners: {
             'rowclick': function(grid, index, rec){
                 if (grid.getSelectionModel().hasSelection()) {
