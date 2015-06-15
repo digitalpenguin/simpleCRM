@@ -21,10 +21,13 @@ SimpleCRM.panel.Contact = function(config) {
             ,name: 'id'
         },{
             xtype: 'container'
-            ,layout:'column'
+            ,layout:'hbox'
+            ,align:'stretch'
             ,items:[{
                 xtype:'container'
                 ,layout:'form'
+                ,flex:1
+                ,style:'padding:20px;'
                 ,items:[{
                     xtype: 'textfield'
                     ,fieldLabel: 'Name'
@@ -60,6 +63,8 @@ SimpleCRM.panel.Contact = function(config) {
             },{
                 xtype:'container'
                 ,layout:'form'
+                ,flex:1
+                ,style:'padding:20px;'
                 ,items:[{
                     xtype:'textfield'
                     ,fieldLabel:'Website'
@@ -67,8 +72,18 @@ SimpleCRM.panel.Contact = function(config) {
                     ,anchor:'100%'
                 },{
                     xtype:'textfield'
+                    ,fieldLabel:'Contact Name'
+                    ,name:'contact_name'
+                    ,anchor:'100%'
+                },{
+                    xtype:'textfield'
                     ,fieldLabel:'Phone Number'
                     ,name:'phone_1'
+                    ,anchor:'100%'
+                },{
+                    xtype:'textfield'
+                    ,fieldLabel:'Phone Number 2'
+                    ,name:'phone_2'
                     ,anchor:'100%'
                 }]
             }]
