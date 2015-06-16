@@ -61,7 +61,7 @@ Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
             var slideContactPanelIn = new Ext.util.DelayedTask(function(){ // define delay
                 contactGridHeader.update(
                 '<h3>'+ row.get('name')+' - Contact Details</h3>' +
-                '<p>'+ 'Here is a description for the panel' +'</p>');
+                '<p>'+ row.get('description') +'</p>');
                 activeTab.add(contactPanel);
                 activeTab.doLayout();
                 contactPanel.getEl().slideIn('r', {

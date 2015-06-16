@@ -5,7 +5,7 @@ SimpleCRM.grid.Contacts = function(config) {
         id: 'simplecrm-grid-contacts'
         ,url: SimpleCRM.config.connectorUrl
         ,baseParams: { action: 'mgr/contact/getList' }
-        ,fields: ['id','name','school_type','address_1','address_2','address_3','website','phone_1','phone_2','description','year_established','product_offering','menu']
+        ,fields: ['id','contacted','name','school_type','address_1','address_2','address_3','website','phone_1','phone_2','description','year_established','product_offering','extra_info','menu']
         ,paging: true
         ,remoteSort: true
         ,anchor: '97%'
@@ -14,7 +14,7 @@ SimpleCRM.grid.Contacts = function(config) {
             'rowclick': function(grid, index, rec){
                 if (grid.getSelectionModel().hasSelection()) {
                     var row = grid.getSelectionModel().getSelections()[0];
-                    var contactId = row.get('id');
+                    var contactId = row.id;
                 }
                 this.loadContactPanel(grid, row, contactId);
             }
@@ -22,21 +22,23 @@ SimpleCRM.grid.Contacts = function(config) {
         ,columns: [{
             header: 'Contacted'
             ,dataIndex: 'contacted'
+            ,align:'center'
             ,sortable: true
             ,width: 50
-            ,editor: { xtype: 'textfield' }
+            ,renderer: function(value){
+                var active = value ? 'greentick.png' : 'redcross.png';
+                return '<img src="' + SimpleCRM.config.cssUrl + '/img/' + active + '" >';
+            }
         },{
             header: _('simplecrm.name')
             ,dataIndex: 'name'
             ,sortable: true
             ,width: 100
-            ,editor: { xtype: 'textfield' }
         },{
             header: 'Location'
             ,dataIndex: 'address_3'
             ,sortable: true
             ,width: 100
-            ,editor: { xtype: 'textfield'}
         },{
             header: 'School Type'
             ,dataIndex: 'school_type'
@@ -46,13 +48,11 @@ SimpleCRM.grid.Contacts = function(config) {
             header: 'Website'
             ,dataIndex: 'website'
             ,width: 100
-            ,editor: { xtype: 'textfield'}
         },{
             header: _('simplecrm.description')
             ,dataIndex: 'description'
             ,sortable: false
             ,width: 350
-            ,editor: { xtype: 'textfield' }
         }],tbar:[{
             text: _('simplecrm.contact_create')
             ,handler: this.createContact
@@ -84,9 +84,6 @@ SimpleCRM.grid.Contacts = function(config) {
         }]
         ,getMenu: function() {
             return [{
-                text: _('simplecrm.contact_update')
-                ,handler: this.updateContact
-            },'-',{
                 text: _('simplecrm.contact_remove')
                 ,handler: this.removeContact
             }];
@@ -109,31 +106,8 @@ Ext.extend(SimpleCRM.grid.Contacts,MODx.grid.Grid, {
         Ext.getCmp('contacts-search-filter').reset();
         this.getBottomToolbar().changePage(1);
         this.refresh();
-    },createContact: function(btn,e) {
-        if (!this.createContactWindow) {
-            this.createContactWindow = MODx.load({
-                xtype: 'simplecrm-window-contact-create'
-                ,blankValues: true
-                ,listeners: {
-                    'success': {fn:function() {
-                        this.refresh();
-                    },scope:this}
-                }
-            });
-        }
-        this.createContactWindow.show(e.target);
-    },updateContact: function(btn,e) {
-        if (!this.updateContactWindow) {
-            this.updateContactWindow = MODx.load({
-                xtype: 'simplecrm-window-contact-update'
-                ,record: this.menu.record
-                ,listeners: {
-                    'success': {fn:this.refresh,scope:this}
-                }
-            });
-        }
-        this.updateContactWindow.setValues(this.menu.record);
-        this.updateContactWindow.show(e.target);
+    },createContact: function() {
+        //
     },removeContact: function() {
         MODx.msg.confirm({
             title: _('simplecrm.contact_remove')
@@ -149,42 +123,14 @@ Ext.extend(SimpleCRM.grid.Contacts,MODx.grid.Grid, {
                 },scope:this}
             }
         });
-    },loadContactPanel: function(grid, row, contactId) {
-        Ext.getCmp('simplecrm-panel-home').replaceGridWithContactPanel(grid, row, contactId);
+    },loadContactPanel: function(grid, row, contactId, update) {
+        Ext.getCmp('simplecrm-panel-home').replaceGridWithContactPanel(grid, row, contactId, update);
+    }, createContactPanel: function(grid) {
+        //
     }
 
 });
 Ext.reg('simplecrm-grid-contacts',SimpleCRM.grid.Contacts);
-
-
-SimpleCRM.window.UpdateContact = function(config) {
-    config = config || {};
-    Ext.applyIf(config,{
-        title: _('simplecrm.contact_update')
-        ,url: SimpleCRM.config.connectorUrl
-        ,baseParams: {
-            action: 'mgr/contact/update'
-        }
-        ,fields: [{
-            xtype: 'hidden'
-            ,name: 'id'
-        },{
-            xtype: 'textfield'
-            ,fieldLabel: _('simplecrm.name')
-            ,name: 'name'
-            ,anchor: '100%'
-        },{
-            xtype: 'textarea'
-            ,fieldLabel: _('simplecrm.description')
-            ,name: 'description'
-            ,anchor: '100%'
-        }]
-    });
-    SimpleCRM.window.UpdateContact.superclass.constructor.call(this,config);
-};
-Ext.extend(SimpleCRM.window.UpdateContact,MODx.Window);
-Ext.reg('simplecrm-window-contact-update',SimpleCRM.window.UpdateContact);
-
 
 SimpleCRM.window.CreateContact = function(config) {
     config = config || {};

@@ -23,6 +23,9 @@ SimpleCRM.panel.Contact = function(config) {
             xtype: 'container'
             ,layout:'hbox'
             ,align:'stretch'
+            ,defaults: {
+                labelWidth:120
+            }
             ,items:[{
                 xtype:'container'
                 ,layout:'form'
@@ -33,6 +36,23 @@ SimpleCRM.panel.Contact = function(config) {
                     ,fieldLabel: 'Name'
                     ,name: 'name'
                     ,anchor: '100%'
+                },{
+                    fieldLabel:'Contacted'
+                    ,xtype: 'container'
+                    ,defaultType: 'radio'
+                    ,anchor: '100%;'
+                    ,flex:1
+                    ,items: [{
+                        boxLabel:'Yes'
+                        ,checked: false
+                        ,name:'contacted'
+                        ,inputValue:1
+                    },{
+                        boxLabel:'No'
+                        ,checked: true
+                        ,name:'contacted'
+                        ,inputValue:0
+                    }]
                 },{
                     xtype: 'textarea'
                     ,fieldLabel: 'Description'
@@ -84,6 +104,16 @@ SimpleCRM.panel.Contact = function(config) {
                     xtype:'textfield'
                     ,fieldLabel:'Phone Number 2'
                     ,name:'phone_2'
+                    ,anchor:'100%'
+                },{
+                    xtype:'textfield'
+                    ,fieldLabel:'Year Established'
+                    ,name:'year_established'
+                    ,anchor:'100%'
+                },{
+                    xtype:'textarea'
+                    ,fieldLabel:'Extra Information'
+                    ,name:'extra_info'
                     ,anchor:'100%'
                 }]
             }]
@@ -148,6 +178,8 @@ Ext.extend(SimpleCRM.panel.Contact,MODx.FormPanel,{
         this.backToContactGrid();
     },applyChanges: function() {
         this.submit();
+        this.refresh();
+        Ext.getCmp('simplecrm-grid-contacts-header').refresh();
     }
 });
 Ext.reg('simplecrm-panel-contact',SimpleCRM.panel.Contact);
