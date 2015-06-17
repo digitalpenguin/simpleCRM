@@ -42,7 +42,7 @@ SimpleCRM.panel.Home = function(config) {
     SimpleCRM.panel.Home.superclass.constructor.call(this,config);
 };
 Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
-    replaceGridWithCreateContactPanel: function(grid) {
+    /*replaceGridWithCreateContactPanel: function(grid) {
         if (!Ext.getCmp('simplecrm-panel-contact')) { // stop double clicks
             var tabs = Ext.getCmp('top-tabs');
             var activeTab = tabs.getActiveTab();
@@ -74,8 +74,9 @@ Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
             //do nothing here (to stop more than one grid loading)
         }
     }
-    ,replaceGridWithUpdateContactPanel: function(grid, row, contactId) {
+    ,*/loadContactPanel: function(grid, row, isUpdate) {
         if (!Ext.getCmp('simplecrm-panel-contact')) { // stop double clicks
+
             var tabs = Ext.getCmp('top-tabs');
             var activeTab = tabs.getActiveTab();
             var contactGrid = Ext.getCmp('simplecrm-grid-contacts');
@@ -87,14 +88,31 @@ Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
                 useDisplay: true
             });
 
+            if (!isUpdate) {
+                row = {};
+            }
 
-            var contactPanel = new SimpleCRM.panel.Contact;
-            contactPanel.passContactId(contactId); // pass id of selected contact
-            contactPanel.setIsUpdate();
+            var contactPanel = MODx.load({
+                xtype: 'simplecrm-panel-contact'
+                ,isUpdate: isUpdate
+                ,title: (isUpdate) ?  'Update Contact' : 'Create New Contact'
+                ,record: row
+                ,listeners: {
+                    'success': {fn:function() { this.refresh(); },scope:this}
+                }
+            });
+
+            contactPanel.getForm().setValues(row.data);
             var slideContactPanelIn = new Ext.util.DelayedTask(function(){ // define delay
-                contactGridHeader.update(
-                '<h3>'+ row.get('name')+' - Contact Details</h3>' +
-                '<p>'+ row.get('description') +'</p>');
+                if(isUpdate) {
+                    contactGridHeader.update(
+                        '<h3>'+ row.get('name')+' - Contact Details</h3>' +
+                        '<p>'+ row.get('description') +'</p>');
+                } else {
+                    contactGridHeader.update(
+                        '<h3>New Contact Details</h3>' +
+                        '<p>Enter the details for the new contact here.</p>');
+                }
                 activeTab.add(contactPanel);
                 activeTab.doLayout();
                 contactPanel.getEl().slideIn('r', {
@@ -107,7 +125,7 @@ Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
         } else {
             //do nothing here (to stop more than one grid loading)
         }
-    },backToContactGrid: function() {
+    },loadContactGrid: function() {
         var tabs = Ext.getCmp('top-tabs');
         var tab = tabs.getActiveTab();
         var contactPanel = Ext.getCmp('simplecrm-panel-contact');

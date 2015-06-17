@@ -14,9 +14,8 @@ SimpleCRM.grid.Contacts = function(config) {
             'rowclick': function(grid, index, rec){
                 if (grid.getSelectionModel().hasSelection()) {
                     var row = grid.getSelectionModel().getSelections()[0];
-                    var contactId = row.id;
                 }
-                this.loadUpdateContactPanel(grid, row, contactId);
+                this.loadUpdateContactPanel(grid, row);
             }
         }
         ,columns: [{
@@ -121,10 +120,11 @@ Ext.extend(SimpleCRM.grid.Contacts,MODx.grid.Grid, {
                 },scope:this}
             }
         });
-    },loadUpdateContactPanel: function(grid, row, contactId) {
-        Ext.getCmp('simplecrm-panel-home').replaceGridWithUpdateContactPanel(grid, row, contactId);
-    }, loadCreateContactPanel: function() {
-        Ext.getCmp('simplecrm-panel-home').replaceGridWithCreateContactPanel(this);
+    },loadUpdateContactPanel: function(grid, row) {
+        Ext.getCmp('simplecrm-panel-home').loadContactPanel(grid, row, true);
+    },loadCreateContactPanel: function() {
+        var row = {};
+        Ext.getCmp('simplecrm-panel-home').loadContactPanel(this, row, false);
     }
 
 });
