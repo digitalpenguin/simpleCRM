@@ -1,5 +1,7 @@
 SimpleCRM.panel.Contact = function(config) {
+
     config = config || {};
+    config.update = false;
     Ext.apply(config,{
         border: false
         ,id: 'simplecrm-panel-contact'
@@ -9,7 +11,7 @@ SimpleCRM.panel.Contact = function(config) {
         ,anchor: '90%'
         ,url: SimpleCRM.config.connectorUrl
         ,baseParams: {
-            action: 'mgr/contact/update'
+            action: (config.update)? 'mgr/contact/update':'mgr/contact/create'
         }
         ,listeners: {
             'render': {fn:function(){
@@ -153,6 +155,8 @@ SimpleCRM.panel.Contact = function(config) {
 Ext.extend(SimpleCRM.panel.Contact,MODx.FormPanel,{
     passContactId: function(contactId) {
         this.config.contactId = contactId;
+    },setIsUpdate: function(){
+        this.config.update = true;
     },setup: function() {
         MODx.Ajax.request({
             url: this.config.url

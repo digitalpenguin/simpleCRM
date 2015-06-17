@@ -42,7 +42,39 @@ SimpleCRM.panel.Home = function(config) {
     SimpleCRM.panel.Home.superclass.constructor.call(this,config);
 };
 Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
-    replaceGridWithContactPanel: function(grid, row, contactId) {
+    replaceGridWithCreateContactPanel: function(grid) {
+        if (!Ext.getCmp('simplecrm-panel-contact')) { // stop double clicks
+            var tabs = Ext.getCmp('top-tabs');
+            var activeTab = tabs.getActiveTab();
+            var contactGrid = Ext.getCmp('simplecrm-grid-contacts');
+            var contactGridHeader = Ext.getCmp('simplecrm-grid-contacts-header');
+            contactGrid.getEl().ghost('l', {
+                easing: 'easeOut',
+                duration:.3,
+                remove: true,
+                useDisplay: true
+            });
+
+            var contactPanel = new SimpleCRM.panel.Contact;
+            contactPanel.config.isUpdate = false;
+            var slideContactPanelIn = new Ext.util.DelayedTask(function(){ // define delay
+                contactGridHeader.update(
+                    '<h3>New Contact Details</h3>' +
+                    '<p>Enter the details for the new contact record here.</p>');
+                activeTab.add(contactPanel);
+                activeTab.doLayout();
+                contactPanel.getEl().slideIn('r', {
+                    easing: 'easeIn',
+                    duration:.3,
+                    useDisplay: false
+                });
+            });
+            slideContactPanelIn.delay(350); // keep delay slightly longer than effect
+        } else {
+            //do nothing here (to stop more than one grid loading)
+        }
+    }
+    ,replaceGridWithUpdateContactPanel: function(grid, row, contactId) {
         if (!Ext.getCmp('simplecrm-panel-contact')) { // stop double clicks
             var tabs = Ext.getCmp('top-tabs');
             var activeTab = tabs.getActiveTab();
@@ -58,6 +90,7 @@ Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
 
             var contactPanel = new SimpleCRM.panel.Contact;
             contactPanel.passContactId(contactId); // pass id of selected contact
+            contactPanel.setIsUpdate();
             var slideContactPanelIn = new Ext.util.DelayedTask(function(){ // define delay
                 contactGridHeader.update(
                 '<h3>'+ row.get('name')+' - Contact Details</h3>' +

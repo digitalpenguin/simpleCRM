@@ -16,7 +16,7 @@ SimpleCRM.grid.Contacts = function(config) {
                     var row = grid.getSelectionModel().getSelections()[0];
                     var contactId = row.id;
                 }
-                this.loadContactPanel(grid, row, contactId);
+                this.loadUpdateContactPanel(grid, row, contactId);
             }
         }
         ,columns: [{
@@ -55,7 +55,7 @@ SimpleCRM.grid.Contacts = function(config) {
             ,width: 350
         }],tbar:[{
             text: _('simplecrm.contact_create')
-            ,handler: this.createContact
+            ,handler: this.loadCreateContactPanel
         },'->',{
             xtype: 'textfield'
             ,id: 'contacts-search-filter'
@@ -106,8 +106,6 @@ Ext.extend(SimpleCRM.grid.Contacts,MODx.grid.Grid, {
         Ext.getCmp('contacts-search-filter').reset();
         this.getBottomToolbar().changePage(1);
         this.refresh();
-    },createContact: function() {
-        //
     },removeContact: function() {
         MODx.msg.confirm({
             title: _('simplecrm.contact_remove')
@@ -123,10 +121,10 @@ Ext.extend(SimpleCRM.grid.Contacts,MODx.grid.Grid, {
                 },scope:this}
             }
         });
-    },loadContactPanel: function(grid, row, contactId, update) {
-        Ext.getCmp('simplecrm-panel-home').replaceGridWithContactPanel(grid, row, contactId, update);
-    }, createContactPanel: function(grid) {
-        //
+    },loadUpdateContactPanel: function(grid, row, contactId) {
+        Ext.getCmp('simplecrm-panel-home').replaceGridWithUpdateContactPanel(grid, row, contactId);
+    }, loadCreateContactPanel: function() {
+        Ext.getCmp('simplecrm-panel-home').replaceGridWithCreateContactPanel(this);
     }
 
 });
