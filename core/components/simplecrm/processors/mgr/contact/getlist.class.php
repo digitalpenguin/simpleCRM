@@ -17,5 +17,21 @@ class ContactGetListProcessor extends modObjectGetListProcessor {
         return $c;
     }
 
+    /*public function beforeIteration(array $list) {
+        $rows = array();
+        foreach ($list as $row){
+            $row['createdby'] = $this->getUserName($row['createdby']);
+            $row['editedby'] = $this->getUserName($row['editedby']);
+            $rows[] = $row;
+        }
+        return $rows;
+    }
+
+    private function getUserName($userId) {
+        $profile = $this->modx->getObject('modUserProfile', array('internalKey' => $userId));
+        $fullName = $profile->get('fullname');
+        return $fullName;
+    }*/
+
 }
 return 'ContactGetListProcessor';

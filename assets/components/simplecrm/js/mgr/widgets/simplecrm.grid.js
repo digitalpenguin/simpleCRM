@@ -5,7 +5,7 @@ SimpleCRM.grid.Contacts = function(config) {
         id: 'simplecrm-grid-contacts'
         ,url: SimpleCRM.config.connectorUrl
         ,baseParams: { action: 'mgr/contact/getList' }
-        ,fields: ['id','contacted','name','school_type','address_1','address_2','address_3','website','phone_1','phone_2','description','year_established','product_offering','extra_info','menu']
+        ,fields: ['id','contacted','name','school_type','address_1','address_2','address_3','website','phone_1','phone_2','description','year_established','product_offering','extra_info','editedby','createdby','menu']
         ,paging: true
         ,remoteSort: true
         ,anchor: '97%'

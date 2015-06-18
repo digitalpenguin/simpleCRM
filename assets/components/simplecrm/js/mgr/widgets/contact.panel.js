@@ -127,7 +127,7 @@ SimpleCRM.panel.Contact = function(config) {
                 xtype:'button'
                 ,text: 'Save'
                 ,listeners: {
-                    'click': {fn: this.saveContact, scope:this}
+                    'click': {fn:this.saveContact, scope:this}
                 }
             }, {
                 xtype:'button'
@@ -151,10 +151,12 @@ Ext.extend(SimpleCRM.panel.Contact,MODx.FormPanel,{
         Ext.getCmp('simplecrm-panel-home').loadContactGrid();
     },saveContact: function() {
         this.submit();
-        this.loadContactGrid();
+        this.on('success', function() {
+            console.log('eventname thrown', arguments);
+            this.loadContactGrid();
+        });
     },applyChanges: function() {
         this.submit();
-        Ext.getCmp('simplecrm-grid-contacts-header').refresh();
     }
 });
 Ext.reg('simplecrm-panel-contact',SimpleCRM.panel.Contact);
