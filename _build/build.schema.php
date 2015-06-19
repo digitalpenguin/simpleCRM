@@ -17,5 +17,6 @@ if (!is_dir($sources['model'])) { $modx->log(modX::LOG_LEVEL_ERROR,'Model direct
 if (!file_exists($sources['schema_file'])) { $modx->log(modX::LOG_LEVEL_ERROR,'Schema file not found!'); die(); }
 $generator->parseSchema($sources['schema_file'],$sources['model']);
 $modx->addPackage('simplecrm', $sources['model']); // add package to make all models available
-$manager->createObjectContainer('Contact'); // created the database table
+$manager->createObjectContainer('Contact'); // create the database tables
+$manager->createObjectContainer('Response');
 $modx->log(modX::LOG_LEVEL_INFO, 'Done!');

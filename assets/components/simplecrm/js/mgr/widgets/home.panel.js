@@ -65,9 +65,6 @@ Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
                 ,isUpdate: isUpdate
                 ,title: (isUpdate) ?  'Update Contact' : 'Create New Contact'
                 ,record: row
-                /*,listeners: {
-                    'success': {fn:function() { this.refresh(); },scope:this}
-                }*/
             });
 
             contactPanel.getForm().setValues(row.data);
@@ -92,7 +89,7 @@ Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
             });
             slideContactPanelIn.delay(350); // keep delay slightly longer than effect
         } else {
-            //do nothing here (to stop more than one grid loading)
+            //do nothing here (to stop more than one inner panel loading)
         }
     },loadContactGrid: function() {
         var tabs = Ext.getCmp('top-tabs');
@@ -117,9 +114,10 @@ Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
                 scope: this
             });
             contactPanel.destroy();
-            contactGrid.refresh();
+
         });
         slideContactPanelOut.delay(350); // keep delay slightly longer than effect
+        contactGrid.refresh();
     }
 });
 Ext.reg('simplecrm-panel-home',SimpleCRM.panel.Home);

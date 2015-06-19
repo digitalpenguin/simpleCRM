@@ -113,6 +113,10 @@ SimpleCRM.panel.Contact = function(config) {
                     ,anchor:'100%'
                 }]
             }]
+        },{
+            xtype:'button'
+            ,text:'grid will go here'
+
         }]
         ,tbar:[{
             text: 'Back to Contact List'

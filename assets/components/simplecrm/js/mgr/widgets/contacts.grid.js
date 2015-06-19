@@ -130,41 +130,6 @@ Ext.extend(SimpleCRM.grid.Contacts,MODx.grid.Grid, {
 });
 Ext.reg('simplecrm-grid-contacts',SimpleCRM.grid.Contacts);
 
-SimpleCRM.window.CreateContact = function(config) {
-    config = config || {};
-    Ext.applyIf(config,{
-        title: _('simplecrm.contact_create')
-        ,url: SimpleCRM.config.connectorUrl
-        ,baseParams: {
-            action: 'mgr/contact/create'
-        }
-        ,fields: [{
-            xtype: 'textfield'
-            ,fieldLabel: _('simplecrm.name')
-            ,name: 'name'
-            ,anchor: '100%'
-        },{
-            xtype: 'textfield'
-            ,fieldLabel: 'Location'
-            ,name: 'address_3'
-            ,anchor: '100%'
-        },{
-            xtype: 'textarea'
-            ,fieldLabel: _('simplecrm.description')
-            ,name: 'description'
-            ,anchor: '100%'
-        },{
-            xtype: 'simplecrm-combo-schooltype'
-            ,fieldLabel: 'School Type'
-            ,name: 'school_type'
-            ,anchor: '100%'
-        }]
-    });
-    SimpleCRM.window.CreateContact.superclass.constructor.call(this,config);
-};
-Ext.extend(SimpleCRM.window.CreateContact,MODx.Window);
-Ext.reg('simplecrm-window-contact-create',SimpleCRM.window.CreateContact);
-
 
 SimpleCRM.combo.SchoolType = function(config) {
     config = config || {};
