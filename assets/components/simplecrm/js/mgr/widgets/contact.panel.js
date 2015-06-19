@@ -12,6 +12,9 @@ SimpleCRM.panel.Contact = function(config) {
         ,baseParams: {
             action: (config.isUpdate)? 'mgr/contact/update':'mgr/contact/create'
         }
+        ,listeners: {
+            'beforerender': this.loadResponseGrid
+        }
         ,items: [{
             xtype: 'hidden'
             ,name: 'id'
@@ -113,10 +116,6 @@ SimpleCRM.panel.Contact = function(config) {
                     ,anchor:'100%'
                 }]
             }]
-        },{
-            xtype:'button'
-            ,text:'grid will go here'
-
         }]
         ,tbar:[{
             text: 'Back to Contact List'
@@ -150,8 +149,14 @@ SimpleCRM.panel.Contact = function(config) {
     });
     SimpleCRM.panel.Contact.superclass.constructor.call(this,config);
 };
-Ext.extend(SimpleCRM.panel.Contact,MODx.FormPanel,{
-    loadContactGrid: function() {
+Ext.extend(SimpleCRM.panel.Contact,MODx.FormPanel, {
+    loadResponseGrid: function() {
+        var responseGrid = MODx.load({
+            xtype:'simplecrm-grid-responses'
+        });
+        this.add(responseGrid);
+        this.doLayout();
+    },loadContactGrid: function() {
         Ext.getCmp('simplecrm-panel-home').loadContactGrid();
     },saveContact: function() {
         this.submit();

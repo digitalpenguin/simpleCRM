@@ -29,6 +29,7 @@ class SimpleCRMIndexManagerController extends modExtraManagerController {
 
      public function loadCustomCssJs() {
          $this->addJavascript($this->simplecrm->config['jsUrl'].'mgr/widgets/contact.panel.js');
+         $this->addJavascript($this->simplecrm->config['jsUrl'].'mgr/widgets/responses.grid.js');
          $this->addJavascript($this->simplecrm->config['jsUrl'].'mgr/widgets/contacts.grid.js');
          $this->addJavascript($this->simplecrm->config['jsUrl'].'mgr/widgets/home.panel.js');
          $this->addLastJavascript($this->simplecrm->config['jsUrl'].'mgr/sections/index.js');
