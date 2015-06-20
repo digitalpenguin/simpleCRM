@@ -67,10 +67,6 @@ Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
                 ,record: row
             });
 
-            var responseGrid = MODx.load({
-                xtype: 'simplecrm-grid-responses'
-            });
-
             contactPanel.getForm().setValues(row.data);
             var slideContactPanelIn = new Ext.util.DelayedTask(function(){ // define delay
                 if(isUpdate) {
@@ -84,7 +80,6 @@ Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
                         '<p>Enter the details for the new contact here.</p>');
                 }
                 activeTab.add(contactPanel);
-                activeTab.add(responseGrid);
                 activeTab.doLayout();
                 contactPanel.getEl().slideIn('r', {
                     easing: 'easeIn',
@@ -100,7 +95,6 @@ Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
         var tabs = Ext.getCmp('top-tabs');
         var tab = tabs.getActiveTab();
         var contactPanel = Ext.getCmp('simplecrm-panel-contact');
-        var responseGrid = Ext.getCmp('simplecrm-grid-responses');
         contactPanel.getEl().ghost('r', {
             easing: 'easeOut',
             duration:.3,
@@ -112,7 +106,6 @@ Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
         var slideContactPanelOut = new Ext.util.DelayedTask(function(){
             contactGridHeader.update('<p>'+_('simplecrm.management_desc')+'</p>');
             tab.remove(contactPanel);
-            tab.remove(responseGrid);
             tab.add(contactGrid);
             tab.doLayout();
             contactGrid.getEl().slideIn('l', {

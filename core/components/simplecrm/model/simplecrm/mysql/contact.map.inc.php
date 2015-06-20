@@ -2,7 +2,7 @@
 $xpdo_meta_map['Contact']= array (
   'package' => 'simplecrm',
   'version' => '1.0',
-  'table' => 'contacts',
+  'table' => 'simplecrm_contacts',
   'extends' => 'xPDOSimpleObject',
   'fields' => 
   array (
@@ -14,15 +14,17 @@ $xpdo_meta_map['Contact']= array (
     'website' => '',
     'phone_1' => '',
     'phone_2' => '',
-    'year_established' => NULL,
     'product_offering' => '',
     'school_type' => NULL,
+    'name_of_principal' => '',
     'contacted' => 0,
     'extra_info' => '',
     'createdon' => NULL,
     'createdby' => 0,
+    'createdby_name' => '',
     'editedon' => NULL,
     'editedby' => 0,
+    'editedby_name' => '',
   ),
   'fieldMeta' => 
   array (
@@ -89,14 +91,6 @@ $xpdo_meta_map['Contact']= array (
       'null' => false,
       'default' => '',
     ),
-    'year_established' => 
-    array (
-      'dbtype' => 'int',
-      'precision' => '4',
-      'attributes' => 'unsigned',
-      'phptype' => 'integer',
-      'null' => false,
-    ),
     'product_offering' => 
     array (
       'dbtype' => 'varchar',
@@ -112,6 +106,14 @@ $xpdo_meta_map['Contact']= array (
       'attributes' => 'unsigned',
       'phptype' => 'integer',
       'null' => false,
+    ),
+    'name_of_principal' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
     ),
     'contacted' => 
     array (
@@ -144,6 +146,14 @@ $xpdo_meta_map['Contact']= array (
       'null' => false,
       'default' => 0,
     ),
+    'createdby_name' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
+    ),
     'editedon' => 
     array (
       'dbtype' => 'datetime',
@@ -158,6 +168,25 @@ $xpdo_meta_map['Contact']= array (
       'phptype' => 'integer',
       'null' => false,
       'default' => 0,
+    ),
+    'editedby_name' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
+    ),
+  ),
+  'composites' => 
+  array (
+    'Response' => 
+    array (
+      'class' => 'Response',
+      'local' => 'id',
+      'foreign' => 'gallery_id',
+      'cardinality' => 'many',
+      'owner' => 'local',
     ),
   ),
   'aggregates' => 

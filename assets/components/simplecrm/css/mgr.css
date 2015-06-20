@@ -2,6 +2,10 @@
     overflow:hidden;
 }
 
+#simplecrm-grid-contacts {
+    min-height:700px;
+}
+
 #simplecrm-panel-contact .x-toolbar {
     background-color:transparent;
     border-color:transparent;
