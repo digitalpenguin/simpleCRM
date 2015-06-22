@@ -51,7 +51,7 @@ Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
             var contactGridHeader = Ext.getCmp('simplecrm-grid-contacts-header');
             contactGrid.getEl().ghost('l', {
                 easing: 'easeOut',
-                duration:.3,
+                duration: .3,
                 remove: true,
                 useDisplay: true
             });
@@ -62,18 +62,34 @@ Ext.extend(SimpleCRM.panel.Home,MODx.Panel, {
 
             var contactPanel = MODx.load({
                 xtype: 'simplecrm-panel-contact'
-                ,isUpdate: isUpdate
-                ,title: (isUpdate) ?  'Update Contact' : 'Create New Contact'
-                ,record: row
+                , isUpdate: isUpdate
+                , title: (isUpdate) ? 'Update Contact' : 'Create New Contact'
+                , record: row
             });
-
             contactPanel.getForm().setValues(row.data);
+            console.log(row.data);
+
+            /**
+             * If not an update we won't set the contactId in the base params as there isn't one yet
+             */
+            var responseGrid;
+            if (isUpdate) {
+                responseGrid = MODx.load({
+                    xtype: 'simplecrm-grid-responses'
+                    , baseParams: {
+                        action: 'mgr/response/getList'
+                        , contactId: row.data.id
+                    }
+                });
+                contactPanel.add(responseGrid);
+            }
             var slideContactPanelIn = new Ext.util.DelayedTask(function(){ // define delay
                 if(isUpdate) {
                     contactGridHeader.update(
                         '<h3>'+ row.get('name')+' - Contact Details</h3>' +
                         '<p>'+ row.get('description') +'</p>'+
-                        '<p>Last updated by '+row.get('createdby')+'</p>');
+                        '<p>Originally created by '+row.get('createdby_name')+' at '+ row.get('createdon')+'</p>'+
+                        '<p>Last updated by '+row.get('editedby_name')+' at '+row.get('editedon')+'</p>');
                 } else {
                     contactGridHeader.update(
                         '<h3>New Contact Details</h3>' +

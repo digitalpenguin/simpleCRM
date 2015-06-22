@@ -28,6 +28,7 @@ class SimpleCRMIndexManagerController extends modExtraManagerController {
      public function getPageTitle() { return $this->modx->lexicon('simplecrm'); }
 
      public function loadCustomCssJs() {
+         $this->addJavascript($this->simplecrm->config['jsUrl'].'mgr/widgets/simplecrm.combobox.js');
          $this->addJavascript($this->simplecrm->config['jsUrl'].'mgr/widgets/contact.panel.js');
          $this->addJavascript($this->simplecrm->config['jsUrl'].'mgr/widgets/responses.grid.js');
          $this->addJavascript($this->simplecrm->config['jsUrl'].'mgr/widgets/contacts.grid.js');

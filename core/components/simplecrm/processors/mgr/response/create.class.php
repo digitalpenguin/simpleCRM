@@ -7,6 +7,8 @@ class ResponseCreateProcessor extends modObjectCreateProcessor {
     public function initialize() {
         $this->setUserId();
         $this->setCreateTime();
+        $this->setProperty('contact_id', $this->getProperty('contactId'));
+        $this->modx->log(modX::LOG_LEVEL_DEBUG, $this->getProperty('contactId'));
         return parent::initialize();
     }
 
@@ -15,8 +17,6 @@ class ResponseCreateProcessor extends modObjectCreateProcessor {
 
         if (empty($name)) {
             $this->addFieldError('persons_name',$this->modx->lexicon('Specify'));
-        } else if ($this->doesAlreadyExist(array('persons_name' => $name))) {
-            $this->addFieldError('persons_name',$this->modx->lexicon('simplecrm.contact_err_ae'));
         }
         return parent::beforeSave();
     }

@@ -5,7 +5,7 @@ SimpleCRM.grid.Contacts = function(config) {
         id: 'simplecrm-grid-contacts'
         ,url: SimpleCRM.config.connectorUrl
         ,baseParams: { action: 'mgr/contact/getList' }
-        ,fields: ['id','contacted','name','school_type','address_1','address_2','address_3','website','phone_1','phone_2','description','year_established','product_offering','extra_info','editedby','createdby','menu']
+        ,fields: ['id','contacted','name','school_type','address_1','address_2','address_3','website','phone_1','phone_2','description','year_established','product_offering','extra_info','editedby','editedby_name','editedon','createdby','createdby_name','createdon','menu']
         ,paging: true
         ,remoteSort: true
         ,anchor: '97%'
@@ -38,6 +38,7 @@ SimpleCRM.grid.Contacts = function(config) {
             ,dataIndex: 'address_3'
             ,sortable: true
             ,width: 100
+            ,editor: { xtype: 'simplecrm-combo-region' ,renderer: true}
         },{
             header: 'School Type'
             ,dataIndex: 'school_type'
@@ -129,26 +130,3 @@ Ext.extend(SimpleCRM.grid.Contacts,MODx.grid.Grid, {
 
 });
 Ext.reg('simplecrm-grid-contacts',SimpleCRM.grid.Contacts);
-
-
-SimpleCRM.combo.SchoolType = function(config) {
-    config = config || {};
-    Ext.applyIf(config,{
-        store: new Ext.data.ArrayStore({
-            id: 0
-            ,fields: ['type','display']
-            ,data: [
-                [0,'Kindergarten']
-                ,[1,'Primary School']
-                ,[2,'Learning Centre']
-                ,[3,'Club House']
-            ]
-        })
-        ,mode: 'local'
-        ,displayField: 'display'
-        ,valueField: 'type'
-    });
-    SimpleCRM.combo.SchoolType.superclass.constructor.call(this,config);
-};
-Ext.extend(SimpleCRM.combo.SchoolType,MODx.combo.ComboBox);
-Ext.reg('simplecrm-combo-schooltype',SimpleCRM.combo.SchoolType);

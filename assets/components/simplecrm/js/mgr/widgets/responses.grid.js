@@ -4,7 +4,6 @@ SimpleCRM.grid.Responses = function(config) {
     Ext.applyIf(config, {
         id: 'simplecrm-grid-responses'
         ,url: SimpleCRM.config.connectorUrl
-        ,baseParams: {action: 'mgr/response/getList'}
         ,fields: ['id','contact_id','persons_name','position','method_of_contact','number_called','time_of_contact','followup_time','editedby','createdby','menu']
         ,paging: true
         ,remoteSort: true
@@ -58,8 +57,19 @@ SimpleCRM.grid.Responses = function(config) {
 };
 Ext.extend(SimpleCRM.grid.Responses,MODx.grid.Grid,{
     windows: {}
-
-    ,getMenu: function() {
+    ,search: function (tf, nv, ov) {
+        var s = this.getStore();
+        s.baseParams.query = tf.getValue();
+        this.getBottomToolbar().changePage(1);
+        this.refresh();
+    }, clearFilter: function () {
+        this.getStore().baseParams = {
+            action: 'mgr/response/getList'
+        };
+        Ext.getCmp('response-search-filter').reset();
+        this.getBottomToolbar().changePage(1);
+        this.refresh();
+    },getMenu: function() {
         var m = [];
         m.push({
             text: 'Update Response'
@@ -116,17 +126,24 @@ Ext.reg('simplecrm-grid-responses',SimpleCRM.grid.Responses);
 
 SimpleCRM.window.CreateUpdateResponse = function(config) {
     config = config || {};
+    this.contactId = Ext.getCmp('simplecrm-panel-contact').getForm().getValues().id;
     this.ident = config.ident || 'response-window'+Ext.id();
     Ext.applyIf(config, {
         id: this.ident
         ,url: SimpleCRM.config.connectorUrl
-        ,action: (config.isUpdate)? 'mgr/response/update':'mgr/response/create'
+        ,baseParams: {
+            action: (config.isUpdate)? 'mgr/response/update':'mgr/response/create'
+            ,contactId: this.contactId
+        }
         ,closeAction: 'close'
         ,fields: [{
             xtype:'textfield'
             ,name:'id'
             ,id: this.ident+'-id'
             ,hidden:true
+        },{
+            xtype:'hidden'
+            ,name:'contact_id'
         },{
             xtype:'textfield'
             ,fieldLabel: 'Person\'s Name'

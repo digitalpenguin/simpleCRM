@@ -27,9 +27,17 @@ SimpleCRM.panel.Contact = function(config) {
                 ,flex:1
                 ,style:'padding:20px;'
                 ,items:[{
+                    html:'<h2>General</h2>'
+                },{
                     xtype: 'textfield'
                     ,fieldLabel: 'Name'
                     ,name: 'name'
+                    ,anchor: '100%'
+                },{
+                    xtype: 'simplecrm-combo-schooltype'
+                    ,fieldLabel: 'School Type'
+                    ,name: 'school_type'
+                    ,hiddenName: 'school_type'
                     ,anchor: '100%'
                 },{
                     fieldLabel:'Contacted'
@@ -39,12 +47,10 @@ SimpleCRM.panel.Contact = function(config) {
                     ,flex:1
                     ,items: [{
                         boxLabel:'Yes'
-                        ,checked: false
                         ,name:'contacted'
                         ,inputValue:1
                     },{
                         boxLabel:'No'
-                        ,checked: true
                         ,name:'contacted'
                         ,inputValue:0
                     }]
@@ -53,27 +59,6 @@ SimpleCRM.panel.Contact = function(config) {
                     ,fieldLabel: 'Description'
                     ,name: 'description'
                     ,anchor: '100%'
-                },{
-                    xtype: 'textfield'
-                    ,fieldLabel: 'Street Address'
-                    ,name: 'address_1'
-                    ,anchor: '100%'
-                },{
-                    xtype: 'textfield'
-                    ,fieldLabel: 'Suburb'
-                    ,name: 'address_2'
-                    ,anchor: '100%'
-                },{
-                    xtype: 'textfield'
-                    ,fieldLabel: 'Region'
-                    ,name: 'address_3'
-                    ,anchor: '100%'
-                },{
-                    xtype: 'simplecrm-combo-schooltype'
-                    ,fieldLabel: 'School Type'
-                    ,name: 'school_type'
-                    ,hiddenName: 'school_type'
-                    ,anchor: '100%'
                 }]
             },{
                 xtype:'container'
@@ -81,6 +66,13 @@ SimpleCRM.panel.Contact = function(config) {
                 ,flex:1
                 ,style:'padding:20px;'
                 ,items:[{
+                    html:'<h2>Contact</h2>'
+                },{
+                    xtype:'textfield'
+                    ,fieldLabel:'Email'
+                    ,name:'email'
+                    ,anchor:'100%'
+                },{
                     xtype:'textfield'
                     ,fieldLabel:'Website'
                     ,name:'website'
@@ -100,20 +92,61 @@ SimpleCRM.panel.Contact = function(config) {
                     ,fieldLabel:'Phone Number 2'
                     ,name:'phone_2'
                     ,anchor:'100%'
-                },{
-                    xtype:'textfield'
-                    ,fieldLabel:'Year Established'
-                    ,name:'year_established'
-                    ,anchor:'100%'
-                },{
-                    xtype:'textarea'
-                    ,fieldLabel:'Extra Information'
-                    ,name:'extra_info'
-                    ,anchor:'100%'
                 }]
             }]
         },{
-            xtype:'simplecrm-grid-responses'
+            xtype: 'container'
+            ,layout:'hbox'
+            ,align:'stretch'
+            ,defaults: {
+                labelWidth:120
+            }
+            ,items:[{
+                xtype: 'container'
+                ,layout: 'form'
+                ,flex: 1
+                ,style: 'padding:20px;'
+                ,items: [{
+                    html: '<h2>Location</h2>'
+                }, {
+                    xtype: 'textfield'
+                    ,fieldLabel: 'Street Address'
+                    ,name: 'address_1'
+                    ,anchor: '100%'
+                }, {
+                    xtype: 'textfield'
+                    ,fieldLabel: 'Suburb'
+                    ,name: 'address_2'
+                    ,anchor: '100%'
+                }, {
+                    xtype: 'simplecrm-combo-region'
+                    ,fieldLabel: 'Region'
+                    ,name: 'address_3'
+                    ,hiddenName: 'address_3'
+                    ,anchor: '100%'
+
+                }]
+            }, {
+                xtype: 'container'
+                , layout: 'form'
+                , flex: 1
+                , style: 'padding:20px;'
+                , items: [{
+                    html: '<h2>Miscellaneous</h2>'
+                }, {
+                    xtype: 'textfield'
+                    , fieldLabel: 'Year Established'
+                    , name: 'year_established'
+                    , anchor: '100%'
+                }, {
+                    xtype: 'textarea'
+                    , fieldLabel: 'Extra Information'
+                    , name: 'extra_info'
+                    , anchor: '100%'
+                }]
+            }]
+        },{
+            html:'<h2>Contact Response Records</h2>'
         }]
         ,tbar:[{
             text: 'Back to Contact List'

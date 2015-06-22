@@ -6,15 +6,18 @@ class ResponseGetListProcessor extends modObjectGetListProcessor {
     public $defaultSortDirection = 'ASC';
     public $objectType = 'simplecrm.response';
 
-    /*public function prepareQueryBeforeCount(xPDOQuery $c) {
-        $query = $this->getProperty('query');
-        if (!empty($query)) {
+    public function prepareQueryBeforeCount(xPDOQuery $c) {
+
+        $contactId = $this->getProperty('contactId');
+        $this->modx->log(modX::LOG_LEVEL_DEBUG, 'Contact id: '.$contactId);
+
+
+        if (!empty($contactId)) {
             $c->where(array(
-                'name:LIKE' => '%'.$query.'%',
-                'OR:description:LIKE' => '%'.$query.'%',
+                'contact_id' => $contactId
             ));
         }
         return $c;
-    }*/
+    }
 }
 return 'ResponseGetListProcessor';

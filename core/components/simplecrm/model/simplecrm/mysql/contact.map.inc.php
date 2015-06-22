@@ -184,7 +184,7 @@ $xpdo_meta_map['Contact']= array (
     array (
       'class' => 'Response',
       'local' => 'id',
-      'foreign' => 'gallery_id',
+      'foreign' => 'contact_id',
       'cardinality' => 'many',
       'owner' => 'local',
     ),
